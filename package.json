@@ -1,0 +1,43 @@
+{
+  "name": "24001118-synrgy7-haf-bcr-ch5",
+  "version": "1.0.0",
+  "description": "SYNRGY Challenge BCR Chapter 5 Hafiidh Luqmanul Hakim FSW 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "compile": "tsc --watch",
+    "start:dev": "nodemon index.ts",
+    "migrate": "ts-node node_modules/.bin/node-pg-migrate -j ts"
+  },
+  "keywords": [
+    "bcr",
+    "express",
+    "ch5",
+    "restful-api"
+  ],
+  "author": "Hafiidh Luqmanul Hakim <hafidluqmanulhakim@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.5",
+    "cloudinary": "^2.2.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.1",
+    "knex": "^3.1.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.24",
+    "@types/express": "^4.17.21",
+    "@types/knex": "^0.16.1",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.12.11",
+    "@types/pg": "^8.11.6",
+    "node-pg-migrate": "^7.3.2",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
