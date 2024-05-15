@@ -93,10 +93,18 @@ export class CarsController {
       })
       
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
   
@@ -124,10 +132,18 @@ export class CarsController {
         })
         
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
   
