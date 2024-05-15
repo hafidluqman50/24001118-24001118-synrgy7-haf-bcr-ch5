@@ -1,4 +1,4 @@
-export interface CreateCarDTO {
+export interface IUpdateCar {
   name:string;
   price:number;
   picture:any;

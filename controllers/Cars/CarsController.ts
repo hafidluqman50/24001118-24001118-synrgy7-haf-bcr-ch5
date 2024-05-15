@@ -1,15 +1,15 @@
-import { Cars } from "../interfaces/Cars";
-import { CarsService } from "../services/CarsService";
+import { Cars } from "../../interfaces/Cars";
+import { CarsService } from "../../services/Cars/CarsService";
 import { Request, Response } from 'express'
-import { CreateCarDTO } from "../interfaces/CreateCarDTO";
-import { UpdateCarDTO } from "../interfaces/UpdateCarDTO";
+import { ICreateCar } from "../../interfaces/ICreateCar";
+import { IUpdateCar } from "../../interfaces/IUpdateCar";
 import Joi from 'joi'
 
 export class CarsController {
   public carsService: CarsService
   
-  constructor() {
-    this.carsService = new CarsService()
+  constructor(carsService: CarsService) {
+    this.carsService = carsService
   }
   
   public async getAll(req: Request, res: Response): Promise<void> {
@@ -56,7 +56,7 @@ export class CarsController {
       const fileBase64: string | undefined = req.file?.buffer.toString("base64");
       const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
       
-      const validationScheme = Joi.object<CreateCarDTO>({
+      const validationScheme = Joi.object<ICreateCar>({
         name:Joi.string().required(),
         price:Joi.number().required(),
         picture:Joi.required(),
@@ -66,7 +66,7 @@ export class CarsController {
         updated_at:Joi.allow()
       })
       
-      const reqData: CreateCarDTO = {
+      const reqData: ICreateCar = {
         name: req.body.name,
         price:req.body.price,
         picture:req.file,
@@ -108,7 +108,7 @@ export class CarsController {
         const fileBase64: string | undefined = req.file?.buffer.toString("base64");
         const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
         
-        const validationScheme = Joi.object<UpdateCarDTO>({
+        const validationScheme = Joi.object<IUpdateCar>({
           name:Joi.string().required(),
           price:Joi.number().required(),
           picture:Joi.required(),
@@ -118,7 +118,7 @@ export class CarsController {
           updated_at:Joi.allow()
         })
         
-        const reqData: UpdateCarDTO = {
+        const reqData: IUpdateCar = {
           name: req.body.name,
           price:req.body.price,
           picture:req.file,

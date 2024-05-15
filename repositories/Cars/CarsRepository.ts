@@ -1,5 +1,5 @@
-import { database } from '../config/database'
-import { Cars } from '../interfaces/Cars'
+import { database } from '../../config/database'
+import { Cars } from '../../interfaces/Cars'
 
 export class CarsRepository {
   

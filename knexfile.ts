@@ -17,7 +17,18 @@ dotenv.config()
   },
   pool: {
     min: 2,
-    max: 10
+    max: 10,
+    afterCreate: (conn: any, done: any) => {
+      conn.query('SET timezone="Asia/Makassar";', (err: any) => {
+        if(err) {
+          console.log('============== Database Disconnected! ==============');
+          done(err, conn)
+        } else {
+          console.log('============== Database Connected! ==============');
+          done(err, conn)
+        }
+      })
+    }
   },
   migrations: {
     tableName: 'knex_migrations'
