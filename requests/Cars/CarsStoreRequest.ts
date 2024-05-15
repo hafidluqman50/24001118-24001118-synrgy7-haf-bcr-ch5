@@ -1,0 +1,38 @@
+import Joi from "joi";
+import { ICreateCar } from "../../interfaces/ICreateCar";
+import { BadRequestException } from "../../exceptions/BadRequestException";
+import { CarsStoreDTO } from "../../DTOs/Cars/CarsStoreDTO";
+
+export class CarsStoreRequest {
+  
+  protected request: ICreateCar
+  
+  constructor(request: ICreateCar) {
+    this.request = request
+  }
+  
+  public validator(): void {
+    const validationScheme = Joi.object<ICreateCar>({
+      name:Joi.string().required(),
+      price:Joi.number().required(),
+      picture:Joi.required(),
+      start_rent:Joi.string().required(),
+      finish_rent:Joi.string().required(),
+      created_at:Joi.allow()
+    })
+    
+    const { error } = validationScheme.validate(this.request)
+    
+    if(error) {
+      throw new BadRequestException('Error Validation', {
+        validations: error.details.map((x) => x.message)
+      })
+    }
+  }
+  
+  public toDTO(): CarsStoreDTO {
+    this.validator()
+    
+    return new CarsStoreDTO(this.request)
+  }
+}

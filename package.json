@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "compile": "tsc --watch",
-    "start:dev": "nodemon index.ts",
+    "compile": "tsc --build --force --watch",
+    "start:dev": "nodemon dist/index.js",
     "migrate": "ts-node node_modules/.bin/node-pg-migrate -j ts"
   },
   "keywords": [

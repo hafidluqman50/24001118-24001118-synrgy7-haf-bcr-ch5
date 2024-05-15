@@ -1,13 +1,14 @@
 import { Cars } from '../../interfaces/Cars'
-import { ICreateCar } from '../../interfaces/ICreateCar'
 import { CarsRepository } from '../../repositories/Cars/CarsRepository'
 import {
   cloudinary,
   UploadApiResponse
 } from '../../config/cloudinary'
-import { IUpdateCar } from '../../interfaces/IUpdateCar'
 import { ServerErrorException } from '../../exceptions/ServerErrorException'
 import { Exception } from '../../exceptions/Exception'
+import { NotFoundException } from '../../exceptions/NotFoundException'
+import { CarsStoreDTO } from '../../DTOs/Cars/CarsStoreDTO'
+import { CarsUpdateDTO } from '../../DTOs/Cars/CarsUpdateDTO'
 
 export class CarsService {
   
@@ -22,20 +23,27 @@ export class CarsService {
   }
   
   public async getById(id: number): Promise<Cars | undefined> {
-    return await this.carsRepository.getById(id)
+    const carById: Cars | undefined = await this.carsRepository.getById(id)
+    
+    if(carById === undefined) {
+      throw new NotFoundException('Data Car Not Found!', {})
+    } else {
+      return carById 
+    }
   }
   
   public async insert(
-    data: ICreateCar, 
+    data: CarsStoreDTO, 
     file: string
   ): Promise<void> {
     try {
+      
       const cloudinaryUpload: UploadApiResponse = await cloudinary.uploader.upload(file, {
           folder: 'fsw',
           use_filename: true
       })
           
-      data.picture = cloudinaryUpload?.secure_url
+      data._picture = cloudinaryUpload?.secure_url
       
       await this.carsRepository.insert(data)
       
@@ -43,7 +51,7 @@ export class CarsService {
       if(error instanceof Exception) {
           throw new Exception(error.message, error.statusCode, {})
       } else {
-          throw new Error((error as Error).message)
+          throw new ServerErrorException((error as Error).message, {})
       }
     }
     
@@ -51,7 +59,7 @@ export class CarsService {
   
   public async update(
     id: number, 
-    data: IUpdateCar, 
+    data: CarsUpdateDTO, 
     file: string
   ): Promise<void> {
     
@@ -61,7 +69,7 @@ export class CarsService {
           use_filename: true
       })
 
-      data.picture = cloudinaryUpload?.secure_url
+      data._picture = cloudinaryUpload?.secure_url
       
       await this.carsRepository.update(id, data)
       
@@ -69,7 +77,7 @@ export class CarsService {
       if(error instanceof Exception) {
         throw new Exception(error.message, error.statusCode, {})
       } else {
-        throw new Error((error as Error).message)
+        throw new ServerErrorException((error as Error).message, {})
       }
     }
     

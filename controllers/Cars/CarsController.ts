@@ -3,7 +3,11 @@ import { CarsService } from "../../services/Cars/CarsService";
 import { Request, Response } from 'express'
 import { ICreateCar } from "../../interfaces/ICreateCar";
 import { IUpdateCar } from "../../interfaces/IUpdateCar";
-import Joi from 'joi'
+import { Exception } from "../../exceptions/Exception";
+import { CarsStoreRequest } from "../../requests/Cars/CarsStoreRequest";
+import { CarsStoreDTO } from "../../DTOs/Cars/CarsStoreDTO";
+import { CarsUpdateDTO } from "../../DTOs/Cars/CarsUpdateDTO";
+import { CarsUpdateRequest } from "../../requests/Cars/CarsUpdateRequest";
 
 export class CarsController {
   public carsService: CarsService
@@ -43,10 +47,24 @@ export class CarsController {
         }
       })
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:'Error Server!'
-      })
+      if(error instanceof Exception) {
+        
+        const errorException: Exception = error
+        
+        res.status(errorException.statusCode).json({
+          status:false,
+          message:errorException.message,
+          data:errorException.data
+        })
+        
+      } else {
+        
+        res.status(500).json({
+          status:false,
+          message:'Error Server!'
+        })
+        
+      }
     }
   }
   
@@ -56,39 +74,18 @@ export class CarsController {
       const fileBase64: string | undefined = req.file?.buffer.toString("base64");
       const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
       
-      const validationScheme = Joi.object<ICreateCar>({
-        name:Joi.string().required(),
-        price:Joi.number().required(),
-        picture:Joi.required(),
-        start_rent:Joi.string().required(),
-        finish_rent:Joi.string().required(),
-        created_at:Joi.allow(),
-        updated_at:Joi.allow()
-      })
-      
       const reqData: ICreateCar = {
         name: req.body.name,
         price:req.body.price,
         picture:req.file,
         start_rent:req.body.start_rent,
         finish_rent:req.body.finish_rent,
-        created_at:new Date(),
-        updated_at:new Date()
+        created_at:new Date()
       }
       
-      const { error: errorValidation } = validationScheme.validate(reqData)
+      const dto: CarsStoreDTO = new CarsStoreRequest(reqData).toDTO()
       
-      if(errorValidation) {
-        res.status(400).send({
-          status:false,
-          message:'Error Validation!',
-          data:{
-            validations:errorValidation.details.map((x) => x.message)
-          }
-        })
-      }
-      
-      await this.carsService.insert(reqData, file)
+      await this.carsService.insert(dto, file)
       
       res.status(201).json({
         status:true,
@@ -108,39 +105,18 @@ export class CarsController {
         const fileBase64: string | undefined = req.file?.buffer.toString("base64");
         const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
         
-        const validationScheme = Joi.object<IUpdateCar>({
-          name:Joi.string().required(),
-          price:Joi.number().required(),
-          picture:Joi.required(),
-          start_rent:Joi.string().required(),
-          finish_rent:Joi.string().required(),
-          created_at:Joi.allow(),
-          updated_at:Joi.allow()
-        })
-        
         const reqData: IUpdateCar = {
           name: req.body.name,
           price:req.body.price,
           picture:req.file,
           start_rent:req.body.start_rent,
           finish_rent:req.body.finish_rent,
-          created_at:new Date(),
           updated_at:new Date()
         }
         
-        const { error: errorValidation } = validationScheme.validate(reqData)
+        const dto: CarsUpdateDTO = new CarsUpdateRequest(reqData).toDTO()
         
-        if(errorValidation) {
-          res.status(400).send({
-            status:false,
-            message:'Error Validation!',
-            data:{
-              validations:errorValidation.details.map((x) => x.message)
-            }
-          })
-        }
-        
-        await this.carsService.update(Number(req.params.id), reqData, file)
+        await this.carsService.update(Number(req.params.id), dto, file)
         
         res.status(200).json({
           status:true,
