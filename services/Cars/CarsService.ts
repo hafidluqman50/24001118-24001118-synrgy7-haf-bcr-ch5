@@ -83,7 +83,7 @@ export class CarsService {
     
   }
   
-  public async delete(id: number): Promise<Cars> {
+  public async delete(id: number): Promise<void> {
     return await this.carsRepository.delete(id)
   }
   

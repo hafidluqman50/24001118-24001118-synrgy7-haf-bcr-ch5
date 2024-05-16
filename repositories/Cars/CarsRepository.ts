@@ -1,3 +1,5 @@
+import { CarsStoreDTO } from '../../DTOs/Cars/CarsStoreDTO'
+import { CarsUpdateDTO } from '../../DTOs/Cars/CarsUpdateDTO'
 import { database } from '../../config/database'
 import { Cars } from '../../interfaces/Cars'
 
@@ -11,15 +13,15 @@ export class CarsRepository {
       return await database<Cars>('cars').select('*').where('id', id).first()
     }
     
-    public async insert(data: any): Promise<any> {
+    public async insert(data: CarsStoreDTO): Promise<void> {
       return await database('cars').insert(data)
     }
     
-    public async update(id: number, data: any): Promise<any> {
+    public async update(id: number, data: CarsUpdateDTO): Promise<void> {
       return await database('cars').where('id', id).update(data)
     }
     
-    public async delete(id: number): Promise<Cars> {
+    public async delete(id: number): Promise<void> {
       return await database<Cars>('cars').where('id', id).delete()
     }
 }
