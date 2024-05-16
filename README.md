@@ -102,13 +102,14 @@
         - Body : `form-data`
         - Method : `POST`
         - Form Data :
-| Key         | Value                    |
-| ----------- | ------------------------ |
-| name        | Ferrari 458 Italy        |
-| price       | 300                      |
-| picture     | file: ferrari_italy.jpeg |
-| start_rent  | 2024-05-16 12:22:09      |
-| finish_rent | 2024-05-17 12:22:09      |
+
+        | Key         | Value                    |
+        | ----------- | ------------------------ |
+        | name        | Ferrari 458 Italy        |
+        | price       | 300                      |
+        | picture     | file: ferrari_italy.jpeg |
+        | start_rent  | 2024-05-16 12:22:09      |
+        | finish_rent | 2024-05-17 12:22:09      |
     - **Response**
         - Json Response :
         ```json
@@ -126,13 +127,14 @@
         - Body : `form-data`
         - Method : `PUT`
         - Form Data :
-| Key         | Value                    |
-| ----------- | ------------------------ |
-| name        | Ferrari 458 Italy        |
-| price       | 300                      |
-| picture     | file: ferrari_italy.jpeg |
-| start_rent  | 2024-05-16 12:22:09      |
-| finish_rent | 2024-05-17 12:22:09      |
+
+        | Key         | Value                    |
+        | ----------- | ------------------------ |
+        | name        | Ferrari 458 Italy        |
+        | price       | 300                      |
+        | picture     | file: ferrari_italy.jpeg |
+        | start_rent  | 2024-05-16 12:22:09      |
+        | finish_rent | 2024-05-17 12:22:09      |
     - **Response**
         - Json Response :
         ```json
