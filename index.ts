@@ -27,6 +27,16 @@ app.put('/api/cars/:id', upload.single('picture'), (req: Request, res: Response)
 
 app.delete('/api/cars/:id', (req: Request, res: Response): Promise<void> => carsController.delete(req, res))
 
+console.log(`
+  | API ENDPOINT  | METHOD |     DESCRIPTION        |
+  |---------------|--------|------------------------|
+  | /api/cars     |   GET  | Get All Data Cars      |
+  | /api/cars/:id |   GET  | Get By Id Data Cars    |
+  | /api/cars/    |  POST  | Post Data Cars         |
+  | /api/cars/:id |   PUT  | Update Data Cars By Id |
+  | /api/cars/:id | DELETE | Delete Data Cars By Id |
+`)
+
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
