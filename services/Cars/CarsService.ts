@@ -64,6 +64,8 @@ export class CarsService {
   ): Promise<void> {
     
     try {
+      await this.getById(id)
+      
       const cloudinaryUpload: UploadApiResponse = await cloudinary.uploader.upload(file, {
           folder: 'fsw',
           use_filename: true
@@ -84,7 +86,17 @@ export class CarsService {
   }
   
   public async delete(id: number): Promise<void> {
-    return await this.carsRepository.delete(id)
+    try {
+      await this.getById(id)
+      
+      await this.carsRepository.delete(id)
+    } catch(error) {
+      if(error instanceof Exception) {
+        throw new Exception(error.message, error.statusCode, {})
+      } else {
+        throw new ServerErrorException((error as Error).message, {})
+      }
+    }
   }
   
 }

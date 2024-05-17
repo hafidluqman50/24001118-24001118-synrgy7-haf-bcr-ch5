@@ -156,10 +156,18 @@ export class CarsController {
         message:'Success Delete Car!'
       })
     } catch(error) {
-      res.status(500).send({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
 }
