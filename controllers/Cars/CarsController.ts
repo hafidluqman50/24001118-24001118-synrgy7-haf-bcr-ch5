@@ -1,15 +1,19 @@
-import { Cars } from "../interfaces/Cars";
-import { CarsService } from "../services/CarsService";
+import { Cars } from "../../interfaces/Cars";
+import { CarsService } from "../../services/Cars/CarsService";
 import { Request, Response } from 'express'
-import { CreateCarDTO } from "../interfaces/CreateCarDTO";
-import { UpdateCarDTO } from "../interfaces/UpdateCarDTO";
-import Joi from 'joi'
+import { ICreateCar } from "../../interfaces/ICreateCar";
+import { IUpdateCar } from "../../interfaces/IUpdateCar";
+import { Exception } from "../../exceptions/Exception";
+import { CarsStoreRequest } from "../../requests/Cars/CarsStoreRequest";
+import { CarsStoreDTO } from "../../DTOs/Cars/CarsStoreDTO";
+import { CarsUpdateDTO } from "../../DTOs/Cars/CarsUpdateDTO";
+import { CarsUpdateRequest } from "../../requests/Cars/CarsUpdateRequest";
 
 export class CarsController {
   public carsService: CarsService
   
-  constructor() {
-    this.carsService = new CarsService()
+  constructor(carsService: CarsService) {
+    this.carsService = carsService
   }
   
   public async getAll(req: Request, res: Response): Promise<void> {
@@ -43,10 +47,24 @@ export class CarsController {
         }
       })
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:'Error Server!'
-      })
+      if(error instanceof Exception) {
+        
+        const errorException: Exception = error
+        
+        res.status(errorException.statusCode).json({
+          status:false,
+          message:errorException.message,
+          data:errorException.data
+        })
+        
+      } else {
+        
+        res.status(500).json({
+          status:false,
+          message:'Error Server!'
+        })
+        
+      }
     }
   }
   
@@ -56,39 +74,18 @@ export class CarsController {
       const fileBase64: string | undefined = req.file?.buffer.toString("base64");
       const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
       
-      const validationScheme = Joi.object<CreateCarDTO>({
-        name:Joi.string().required(),
-        price:Joi.number().required(),
-        picture:Joi.required(),
-        start_rent:Joi.string().required(),
-        finish_rent:Joi.string().required(),
-        created_at:Joi.allow(),
-        updated_at:Joi.allow()
-      })
-      
-      const reqData: CreateCarDTO = {
+      const reqData: ICreateCar = {
         name: req.body.name,
         price:req.body.price,
         picture:req.file,
         start_rent:req.body.start_rent,
         finish_rent:req.body.finish_rent,
-        created_at:new Date(),
-        updated_at:new Date()
+        created_at:new Date()
       }
       
-      const { error: errorValidation } = validationScheme.validate(reqData)
+      const dto: CarsStoreDTO = new CarsStoreRequest(reqData).toDTO()
       
-      if(errorValidation) {
-        res.status(400).send({
-          status:false,
-          message:'Error Validation!',
-          data:{
-            validations:errorValidation.details.map((x) => x.message)
-          }
-        })
-      }
-      
-      await this.carsService.insert(reqData, file)
+      await this.carsService.insert(dto, file)
       
       res.status(201).json({
         status:true,
@@ -96,10 +93,18 @@ export class CarsController {
       })
       
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
   
@@ -108,39 +113,18 @@ export class CarsController {
         const fileBase64: string | undefined = req.file?.buffer.toString("base64");
         const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
         
-        const validationScheme = Joi.object<UpdateCarDTO>({
-          name:Joi.string().required(),
-          price:Joi.number().required(),
-          picture:Joi.required(),
-          start_rent:Joi.string().required(),
-          finish_rent:Joi.string().required(),
-          created_at:Joi.allow(),
-          updated_at:Joi.allow()
-        })
-        
-        const reqData: UpdateCarDTO = {
+        const reqData: IUpdateCar = {
           name: req.body.name,
           price:req.body.price,
           picture:req.file,
           start_rent:req.body.start_rent,
           finish_rent:req.body.finish_rent,
-          created_at:new Date(),
           updated_at:new Date()
         }
         
-        const { error: errorValidation } = validationScheme.validate(reqData)
+        const dto: CarsUpdateDTO = new CarsUpdateRequest(reqData).toDTO()
         
-        if(errorValidation) {
-          res.status(400).send({
-            status:false,
-            message:'Error Validation!',
-            data:{
-              validations:errorValidation.details.map((x) => x.message)
-            }
-          })
-        }
-        
-        await this.carsService.update(Number(req.params.id), reqData, file)
+        await this.carsService.update(Number(req.params.id), dto, file)
         
         res.status(200).json({
           status:true,
@@ -148,10 +132,18 @@ export class CarsController {
         })
         
     } catch(error) {
-      res.status(500).json({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
   
@@ -164,10 +156,18 @@ export class CarsController {
         message:'Success Delete Car!'
       })
     } catch(error) {
-      res.status(500).send({
-        status:false,
-        message:(error as Error).message
-      })
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
     }
   }
 }

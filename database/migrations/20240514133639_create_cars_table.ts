@@ -9,8 +9,8 @@ export async function up(knex: Knex): Promise<void> {
     table.text('picture').notNullable()
     table.timestamp('start_rent').notNullable()
     table.timestamp('finish_rent').notNullable()
-    table.timestamp('created_at').notNullable()
-    table.timestamp('updated_at').notNullable()
+    table.timestamp('created_at').nullable()
+    table.timestamp('updated_at').nullable()
   })
 }
 
