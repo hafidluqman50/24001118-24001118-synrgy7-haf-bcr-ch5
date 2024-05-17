@@ -13,7 +13,8 @@ dotenv.config()
   connection: {
     database: process.env.PGDATABASE,
     user:     process.env.PGUSER,
-    password: process.env.PGPASSWORD
+    password: process.env.PGPASSWORD,
+    port:     Number(process.env.PGPORT)
   },
   pool: {
     min: 2,
