@@ -25,7 +25,7 @@
 | `/api/cars/:id` |   `PUT`  | Update Data Cars By Id |
 | `/api/cars/:id` | `DELETE` | Delete Data Cars By Id |
 
-### EXAMPLE DATA
+### REQUEST AND RESPONSE DATA
 - **Show All Data Cars**
     - **Request** 
         - Endpoint : `/api/cars`
