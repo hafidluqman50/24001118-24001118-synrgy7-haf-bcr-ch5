@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { upload } from './config/multer'
 import { carsController } from "./controllers/Cars/index";
+import './config/database'
 
 dotenv.config();
 

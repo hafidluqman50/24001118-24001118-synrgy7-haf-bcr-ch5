@@ -1,4 +1,4 @@
-import { Cars } from "../../interfaces/Cars";
+import { Car } from "../../models/Car";
 import { CarsService } from "../../services/Cars/CarsService";
 import { Request, Response } from 'express'
 import { ICreateCar } from "../../interfaces/ICreateCar";
@@ -18,7 +18,7 @@ export class CarsController {
   
   public async getAll(req: Request, res: Response): Promise<void> {
     try {
-      const getCars: Cars[] = await this.carsService.getAll()
+      const getCars: Car[] = await this.carsService.getAll()
       
       res.status(200).json({
         status:true,
@@ -30,14 +30,14 @@ export class CarsController {
     } catch(error) {
       res.status(500).json({
         status:false,
-        message:'Error Server!'
+        message:(error as Error).message
       })
     }
   }
   
   public async getById(req: Request, res: Response): Promise<void> {
     try{
-      const getCarByid: Cars | undefined = await this.carsService.getById(Number(req.params.id))
+      const getCarByid: Car | undefined = await this.carsService.getById(Number(req.params.id))
       
       res.status(200).json({
         status:true,
@@ -61,7 +61,7 @@ export class CarsController {
         
         res.status(500).json({
           status:false,
-          message:'Error Server!'
+          message:(error as Error).message
         })
         
       }

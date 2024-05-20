@@ -1,13 +1,13 @@
 import { ICreateCar } from "../../interfaces/ICreateCar";
 
 export class CarsStoreDTO {
-  
-    private name: string;
-    private price: number;
-    private picture: any;
-    private start_rent: string;
-    private finish_rent: string;
-    private created_at: Date;
+
+    public name: string;
+    public price: number;
+    public picture: any;
+    public start_rent: string;
+    public finish_rent: string;
+    public created_at: Date;
     
     constructor(data: ICreateCar) {
         this.name = data.name;

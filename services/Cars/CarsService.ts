@@ -1,4 +1,4 @@
-import { Cars } from '../../interfaces/Cars'
+import { Car } from '../../models/Car'
 import { CarsRepository } from '../../repositories/Cars/CarsRepository'
 import {
   cloudinary,
@@ -18,12 +18,12 @@ export class CarsService {
     this.carsRepository = carsRepository
   }
   
-  public async getAll(): Promise<Cars[]> {
+  public async getAll(): Promise<Car[]> {
     return await this.carsRepository.getAll()
   }
   
-  public async getById(id: number): Promise<Cars | undefined> {
-    const carById: Cars | undefined = await this.carsRepository.getById(id)
+  public async getById(id: number): Promise<Car | undefined> {
+    const carById: Car | undefined = await this.carsRepository.getById(id)
     
     if(carById === undefined) {
       throw new NotFoundException('Data Car Not Found!', {})

@@ -2,12 +2,12 @@ import { IUpdateCar } from "../../interfaces/IUpdateCar";
 
 export class CarsUpdateDTO {
   
-    private name: string;
-    private price: number;
-    private picture: any;
-    private start_rent: string;
-    private finish_rent: string;
-    private updated_at: Date;
+    public name: string;
+    public price: number;
+    public picture: any;
+    public start_rent: string;
+    public finish_rent: string;
+    public updated_at: Date;
     
     constructor(data: IUpdateCar) {
         this.name = data.name;
