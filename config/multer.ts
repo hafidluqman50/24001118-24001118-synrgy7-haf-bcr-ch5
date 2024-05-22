@@ -7,6 +7,9 @@ const upload: Multer = multer({
   }
 })
 
+const none: Multer = multer()
+
 export {
-  upload
+  upload,
+  none
 }
