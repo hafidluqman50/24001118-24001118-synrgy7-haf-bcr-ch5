@@ -8,6 +8,9 @@ import { CarsStoreDTO } from "@DTOs/Cars/CarsStoreDTO";
 import { CarsUpdateDTO } from "@DTOs/Cars/CarsUpdateDTO";
 import { CarsUpdateRequest } from "@Requests/Cars/CarsUpdateRequest";
 import { Car } from '@Models/Car'
+import { CarsDeleteDTO } from "@DTOs/Cars/CarsDeleteDTO";
+import { CarsDeleteRequest } from "@Requests/Cars/CarsDeleteRequest";
+import { CarLog } from "@Models/CarLog";
 
 export class CarsController {
   public carsService: CarsService
@@ -30,7 +33,7 @@ export class CarsController {
     } catch(error) {
       res.status(500).json({
         status:false,
-        message:'Error Server!'
+        message:(error as Error).message
       })
     }
   }
@@ -61,14 +64,14 @@ export class CarsController {
         
         res.status(500).json({
           status:false,
-          message:'Error Server!'
+          message:(error as Error).message
         })
         
       }
     }
   }
   
-  public async insert(req: Request, res: Response): Promise<void> {
+  public async insert(req: any, res: Response): Promise<void> {
     try {
       
       const fileBase64: string | undefined = req.file?.buffer.toString("base64");
@@ -80,7 +83,9 @@ export class CarsController {
         picture:req.file,
         start_rent:req.body.start_rent,
         finish_rent:req.body.finish_rent,
-        created_at:new Date()
+        available: req.body.available,
+        created_at:new Date(),
+        user_id: req.user.id
       }
       
       const dto: CarsStoreDTO = new CarsStoreRequest(reqData).toDTO()
@@ -108,7 +113,7 @@ export class CarsController {
     }
   }
   
-  public async update(req: Request, res: Response): Promise<void> {
+  public async update(req: any, res: Response): Promise<void> {
     try {
         const fileBase64: string | undefined = req.file?.buffer.toString("base64");
         const file: string = `data:${req.file?.mimetype};base64,${fileBase64}`;
@@ -119,7 +124,9 @@ export class CarsController {
           picture:req.file,
           start_rent:req.body.start_rent,
           finish_rent:req.body.finish_rent,
-          updated_at:new Date()
+          available: req.body.available,
+          updated_at:new Date(),
+          user_id: req.user.id
         }
         
         const dto: CarsUpdateDTO = new CarsUpdateRequest(reqData).toDTO()
@@ -147,13 +154,71 @@ export class CarsController {
     }
   }
   
-  public async delete(req: Request, res: Response): Promise<void> {
+  public async delete(req: any, res: Response): Promise<void> {
     try {
-      await this.carsService.delete(Number(req.params.id))
+      const reqData: any = {
+        user_id: req.user.id,
+        car_id: Number(req.params.id),
+        log_time: new Date()
+      }
+      
+      const dto: CarsDeleteDTO = new CarsDeleteRequest(reqData).toDTO()
+      
+      await this.carsService.delete(Number(req.params.id), dto)
       
       res.status(200).send({
         status:true,
         message:'Success Delete Car!'
+      })
+    } catch(error) {
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
+    }
+  }
+  
+  public async getListAvailable(req: Request, res: Response): Promise<void> {
+    try {
+      const carAvailable: Car[] = await this.carsService.getListAvailable()
+      
+      res.status(200).send({
+        status:true,
+        message:'Success Get Car Available!',
+        cars:carAvailable
+      })
+    } catch(error) {
+      if(error instanceof Exception) {  
+        res.status(error.statusCode).json({
+          status:false,
+          message:error.message,
+          data:error.data
+        })
+      } else {
+        res.status(500).json({
+          status:false,
+          message:(error as Error).message
+        })
+      }
+    }
+  }
+  
+  public async getLogActivity(req: Request, res: Response): Promise<void> {
+    try {
+      const carLogs: CarLog[] = await this.carsService.getCarLogs()
+      
+      res.status(200).send({
+        status:true,
+        message:'Success Get Car Logs!',
+        car_logs:carLogs
       })
     } catch(error) {
       if(error instanceof Exception) {  

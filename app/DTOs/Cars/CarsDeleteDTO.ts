@@ -1,31 +1,16 @@
-import { ICreateCar } from "@Interfaces/ICreateCar";
 
-export class CarsStoreDTO {
-
-    public name: string;
-    public price: number;
-    public picture: any;
-    public start_rent: string;
-    public finish_rent: string;
-    public available: number;
-    public created_at: Date;
+export class CarsDeleteDTO {
+  
     public user_id: number;
     public car_id: number;
     public log_time: Date;
     public type_action: string;
     
-    constructor(data: ICreateCar) {
-        this.name = data.name;
-        this.price = data.price;
-        this.picture = data.picture;
-        this.start_rent = data.start_rent;
-        this.finish_rent = data.finish_rent;
-        this.available = data.available
-        this.created_at = data.created_at;
+    constructor(data: any) {
         this.user_id = data.user_id
-        this.car_id = 0
-        this.log_time = data.created_at;
-        this.type_action = 'INSERT'
+        this.car_id = data.car_id
+        this.log_time = data.log_time;
+        this.type_action = 'DELETE'
     }
     
     // public get _name(): string {

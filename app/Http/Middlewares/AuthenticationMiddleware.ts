@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import jwt, { GetPublicKeyOrSecret, JwtPayload, Secret, VerifyErrors } from 'jsonwebtoken'
 
 export class AuthenticationMiddleware {
-  handle(req: any, res: Response, next: NextFunction) {
+  public handle(req: any, res: Response, next: NextFunction) {
     const tokenHeader: string[] | string | undefined = req.headers['authorization']
     
     if(tokenHeader === undefined) {

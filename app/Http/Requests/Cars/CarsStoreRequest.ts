@@ -18,7 +18,9 @@ export class CarsStoreRequest {
       picture:Joi.required(),
       start_rent:Joi.string().required(),
       finish_rent:Joi.string().required(),
-      created_at:Joi.allow()
+      available:Joi.number().required(),
+      created_at:Joi.allow(),
+      user_id:Joi.number().required()
     })
     
     const { error } = validationScheme.validate(this.request)

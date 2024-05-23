@@ -10,9 +10,10 @@ class Car extends Model {
   picture!:string;
   start_rent!:string;
   finish_rent!:string;
+  available!: number;
   created_at?:Date | string | null;
   updated_at?:Date | string | null;
-  
+  deleted_at?:Date | string | null;
 }
 
 type CarType = ModelObject<Car>;

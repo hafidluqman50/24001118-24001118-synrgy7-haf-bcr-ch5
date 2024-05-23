@@ -12,6 +12,7 @@ class User extends Model {
   role!:string;
   created_at?:Date | string | null;
   updated_at?:Date | string | null;
+  deleted_at?:Date | string | null;
   
 }
 

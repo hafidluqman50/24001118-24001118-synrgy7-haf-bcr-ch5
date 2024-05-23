@@ -9,13 +9,21 @@ import { Exception } from '@Exceptions/Exception'
 import { NotFoundException } from '@Exceptions/NotFoundException'
 import { CarsStoreDTO } from '@DTOs/Cars/CarsStoreDTO'
 import { CarsUpdateDTO } from '@DTOs/Cars/CarsUpdateDTO'
+import { CarsDeleteDTO } from '@DTOs/Cars/CarsDeleteDTO'
+import { CarLogsRepository } from '@Repositories/Cars/CarLogsRepository'
+import { CarLog } from '@Models/CarLog'
 
 export class CarsService {
   
   public carsRepository: CarsRepository
+  public carLogRepository: CarLogsRepository
   
-  constructor(carsRepository: CarsRepository) {
+  constructor(
+    carsRepository: CarsRepository,
+    carLogRepository: CarLogsRepository
+  ) {
     this.carsRepository = carsRepository
+    this.carLogRepository = carLogRepository
   }
   
   public async getAll(): Promise<Car[]> {
@@ -33,7 +41,7 @@ export class CarsService {
   }
   
   public async insert(
-    data: CarsStoreDTO, 
+    dto: CarsStoreDTO, 
     file: string
   ): Promise<void> {
     try {
@@ -43,9 +51,13 @@ export class CarsService {
           use_filename: true
       })
           
-      data._picture = cloudinaryUpload?.secure_url
+      dto.picture = cloudinaryUpload?.secure_url
       
-      await this.carsRepository.insert(data)
+      const insertGetId: Car = await this.carsRepository.insert(dto)
+      
+      dto.car_id = insertGetId.id
+      
+      await this.carsRepository.insertLogs(dto)
       
     } catch(error) {
       if(error instanceof Exception) {
@@ -59,7 +71,7 @@ export class CarsService {
   
   public async update(
     id: number, 
-    data: CarsUpdateDTO, 
+    dto: CarsUpdateDTO, 
     file: string
   ): Promise<void> {
     
@@ -71,9 +83,13 @@ export class CarsService {
           use_filename: true
       })
 
-      data._picture = cloudinaryUpload?.secure_url
+      dto.picture = cloudinaryUpload?.secure_url
       
-      await this.carsRepository.update(id, data)
+      await this.carsRepository.update(id, dto)
+      
+      dto.car_id = id
+      
+      await this.carsRepository.insertLogs(dto)
       
     } catch(error) {
       if(error instanceof Exception) {
@@ -85,11 +101,13 @@ export class CarsService {
     
   }
   
-  public async delete(id: number): Promise<void> {
+  public async delete(id: number, dto: CarsDeleteDTO): Promise<void> {
     try {
       await this.getById(id)
       
       await this.carsRepository.delete(id)
+      
+      await this.carsRepository.insertLogs(dto)
     } catch(error) {
       if(error instanceof Exception) {
         throw new Exception(error.message, error.statusCode, {})
@@ -99,4 +117,11 @@ export class CarsService {
     }
   }
   
+  public async getListAvailable(): Promise<Car[]> {
+    return await this.carsRepository.getListAvailable()
+  }
+  
+  public async getCarLogs(): Promise<CarLog[]> {
+    return await this.carLogRepository.getCarLogs()
+  }
 }

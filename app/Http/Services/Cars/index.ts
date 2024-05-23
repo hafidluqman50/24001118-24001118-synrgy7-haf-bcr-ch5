@@ -1,8 +1,9 @@
 import { CarsService } from "./CarsService";
-import { carsRepository } from "@Repositories/Cars";
+import { carLogRepository, carsRepository } from "@Repositories/Cars";
 
 const carsService = new CarsService(
-  carsRepository
+  carsRepository,
+  carLogRepository
 )
 
 export {
