@@ -150,6 +150,32 @@ export class UserController {
   }
   
   public async delete(req: Request, res: Response): Promise<void> {
-    
+   try {
+     await this.userService.delete(Number(req.params.id))
+     
+     res.status(200).send({
+       status:true,
+       message:'Success Delete User Admin!'
+     })
+   } catch(error) {
+     
+     if(error instanceof Exception) {
+      const errorException: Exception = error
+      
+      res.status(errorException.statusCode).json({
+        status:false,
+        message:errorException.message,
+        data:errorException.data
+      })
+      
+    } else {
+      
+      res.status(500).json({
+        status:false,
+        message:(error as Error).message
+      })
+      
+    }
+   }
   }
 }

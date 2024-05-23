@@ -1,14 +1,17 @@
 {
-  "name": "24001118-synrgy7-haf-bcr-ch5",
-  "version": "1.0.0",
-  "description": "SYNRGY Challenge BCR Chapter 5 Hafiidh Luqmanul Hakim FSW 2",
+  "name": "24001118-synrgy7-haf-bcr-ch6",
+  "version": "2.0.0",
+  "description": "SYNRGY Challenge BCR Chapter 6 Hafiidh Luqmanul Hakim FSW 2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
     "compile": "tsc --watch",
     "start:dev": "nodemon dist/index.js",
-    "migrate": "ts-node node_modules/.bin/node-pg-migrate -j ts"
+    "migrate:make": "knex migrate:make",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:up": "knex migrate:up",
+    "migrate:down": "knex migrate:down"
   },
   "_moduleAlisases": {
     "@Controllers": "dist/app/Http/Controllers",
