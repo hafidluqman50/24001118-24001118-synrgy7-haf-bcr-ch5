@@ -1,0 +1,1125 @@
+openapi: 3.0.0
+info:
+  title: SYNRGY 7 Binar Challenge 5
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: SNYRGY 7 Chapter 6 FSW 2 Hafiidh Luqmanul Hakim
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Cars
+  - name: Auth
+  - name: User Admin
+paths:
+  /api/cars:
+    get:
+      tags:
+        - Cars
+      summary: Get All - Cars
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '996'
+            ETag:
+              schema:
+                type: string
+                example: W/"3e4-sfm+zIKOHQJs9f1HAWXBUDycOrI"
+            Date:
+              schema:
+                type: string
+                example: Tue, 14 May 2024 16:33:27 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Cars!
+                data:
+                  cars:
+                    - id: 1
+                      name: Toyota Masserati
+                      price: 5000000
+                      picture: >-
+                        http://res.cloudinary.com/dfylrgzcu/image/upload/v1715696905/fsw/jielnfz6kciufqwz4gwx.jpg
+                      start_rent: '2024-05-14T20:14:00.000Z'
+                      finish_rent: '2024-05-20T20:14:00.000Z'
+                      created_at: '2024-05-14T14:28:20.071Z'
+                      updated_at: '2024-05-14T14:28:20.071Z'
+                    - id: 3
+                      name: Toyota Camrige
+                      price: 5000000
+                      picture: >-
+                        http://res.cloudinary.com/dfylrgzcu/image/upload/v1715701372/fsw/z97s2bg6pvgd8fhmcmh6.jpg
+                      start_rent: '2024-05-14T20:14:00.000Z'
+                      finish_rent: '2024-05-20T20:14:00.000Z'
+                      created_at: '2024-05-14T15:42:47.327Z'
+                      updated_at: '2024-05-14T15:42:47.327Z'
+                    - id: 4
+                      name: Yamaha M1
+                      price: 5000000
+                      picture: >-
+                        http://res.cloudinary.com/dfylrgzcu/image/upload/v1715701410/fsw/zeonz7gx6smdlksc31or.jpg
+                      start_rent: '2024-05-14T20:14:00.000Z'
+                      finish_rent: '2024-05-20T20:14:00.000Z'
+                      created_at: '2024-05-14T15:43:26.920Z'
+                      updated_at: '2024-05-14T15:43:26.920Z'
+    post:
+      tags:
+        - Cars
+      summary: Store - Cars
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: required | string
+                  example: SMK 7 CARS
+                picture:
+                  type: string
+                  description: required | file
+                  format: binary
+                price:
+                  type: integer
+                  description: required | number
+                  example: '5000000'
+                start_rent:
+                  type: string
+                  description: required | date_format:Y-m-d H:i:s
+                  example: '2024-05-14 20:14:00'
+                finish_rent:
+                  type: string
+                  description: required | date_format:Y-m-d H:i:s
+                  example: '2024-05-20 20:14:00'
+                available:
+                  type: integer
+                  description: required | number
+                  example: '1'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '44'
+            ETag:
+              schema:
+                type: string
+                example: W/"2c-Jd8y9xggGHhmlVTsYdzo6pVVtnI"
+            Date:
+              schema:
+                type: string
+                example: Tue, 14 May 2024 15:43:31 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Add Car!
+  /api/cars/{id}:
+    get:
+      tags:
+        - Cars
+      summary: Get By Id - Cars
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: From Car Id
+          example: '8'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '385'
+            ETag:
+              schema:
+                type: string
+                example: W/"181-zy83hMccesib3SwEPy/r6wBMaF0"
+            Date:
+              schema:
+                type: string
+                example: Tue, 14 May 2024 15:32:41 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Succeess Get Data Car By Id!
+                data:
+                  car:
+                    id: 1
+                    name: Toyota Masserati
+                    price: 5000000
+                    picture: >-
+                      http://res.cloudinary.com/dfylrgzcu/image/upload/v1715696905/fsw/jielnfz6kciufqwz4gwx.jpg
+                    start_rent: '2024-05-14T20:14:00.000Z'
+                    finish_rent: '2024-05-20T20:14:00.000Z'
+                    created_at: '2024-05-14T14:28:20.071Z'
+                    updated_at: '2024-05-14T14:28:20.071Z'
+    delete:
+      tags:
+        - Cars
+      summary: Delete - Cars
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: From Car Id
+          example: '6'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '47'
+            ETag:
+              schema:
+                type: string
+                example: W/"2f-VermmVfFxSAuCtushH6PQN5igHU"
+            Date:
+              schema:
+                type: string
+                example: Tue, 14 May 2024 14:33:19 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Delete Car!
+    put:
+      tags:
+        - Cars
+      summary: Update - Cars
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: required | string
+                  example: Masserati
+                price:
+                  type: integer
+                  description: required | number
+                  example: '6000000'
+                start_rent:
+                  type: string
+                  description: required | date_format:Y-m-d H:i:s
+                  example: '2024-05-30 20:14:00'
+                finish_rent:
+                  type: string
+                  description: required | date_format:Y-m-d H:i:s
+                  example: '2024-06-20 20:14:00'
+                picture:
+                  type: string
+                  description: required | file
+                  format: binary
+                available:
+                  type: integer
+                  description: required | number
+                  example: '1'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: From Car Id
+          example: '1'
+      responses:
+        '204':
+          description: No Content
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            ETag:
+              schema:
+                type: string
+                example: W/"2d-cTE+Ikc4NElJjwc0HACja5VFHDo"
+            Date:
+              schema:
+                type: string
+                example: Tue, 14 May 2024 14:32:51 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: null
+  /api/cars/log-activity:
+    get:
+      tags:
+        - Cars
+      summary: Get Log Activities - Cars
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '228'
+            ETag:
+              schema:
+                type: string
+                example: W/"e4-HMZitHP6W1ABm9eoXvfxTa8rd7Y"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:21:31 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Car Logs!
+                car_logs:
+                  - log_time: '2024-05-23T13:27:10.189Z'
+                    type_action: INSERT
+                    car:
+                      id: 8
+                      name: SMK 7 CARS
+                    user:
+                      id: 2
+                      name: Super Admin
+                      email: superadmin@email.com
+  /api/cars/list-available:
+    get:
+      tags:
+        - Cars
+      summary: Get List Availables - Cars
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '1419'
+            ETag:
+              schema:
+                type: string
+                example: W/"58b-VEr8wBDATLHZ1S1BHK5Pg+2xEu4"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:00:17 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Car Available!
+                cars:
+                  - id: 1
+                    name: Honda Camry
+                    price: 50000000
+                    picture: >-
+                      https://res.cloudinary.com/dfylrgzcu/image/upload/v1715849971/fsw/i9w2bvzhkv3n5h7suew3.jpg
+                    start_rent: '2024-05-30T12:14:00.000Z'
+                    finish_rent: '2024-06-20T12:14:00.000Z'
+                    created_at: '2024-05-15T15:47:25.000Z'
+                    updated_at: '2024-05-16T08:59:28.000Z'
+                    available: 1
+                    deleted_at: null
+                  - id: 2
+                    name: Bugatti Veyron
+                    price: 70000000
+                    picture: >-
+                      https://res.cloudinary.com/dfylrgzcu/image/upload/v1715850166/fsw/yn7lfl9i4ok7dp8kiogs.jpg
+                    start_rent: '2024-05-30T12:14:00.000Z'
+                    finish_rent: '2024-06-20T12:14:00.000Z'
+                    created_at: '2024-05-15T15:47:25.000Z'
+                    updated_at: '2024-05-16T08:59:28.000Z'
+                    available: 1
+                    deleted_at: null
+                  - id: 3
+                    name: Ferrari 458 Italy
+                    price: 5774000
+                    picture: >-
+                      https://res.cloudinary.com/dfylrgzcu/image/upload/v1715850490/fsw/lha70u5wfv8aqyab7xr0.jpg
+                    start_rent: '2024-05-30T12:14:00.000Z'
+                    finish_rent: '2024-06-20T12:14:00.000Z'
+                    created_at: '2024-05-15T15:47:25.000Z'
+                    updated_at: '2024-05-16T08:59:28.000Z'
+                    available: 1
+                    deleted_at: null
+                  - id: 8
+                    name: SMK 7 CARS
+                    price: 5000000
+                    picture: >-
+                      https://res.cloudinary.com/dfylrgzcu/image/upload/v1716470846/fsw/mlopqk2itt8pagapbzs6.png
+                    start_rent: '2024-05-14T20:14:00.000Z'
+                    finish_rent: '2024-05-20T20:14:00.000Z'
+                    created_at: '2024-05-23T13:27:10.189Z'
+                    updated_at: null
+                    available: 1
+                    deleted_at: null
+  /api/super-admin/login:
+    post:
+      tags:
+        - Auth
+      summary: Login - Super Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: required | string
+                  example: superadmin@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: superadmin
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '626'
+            ETag:
+              schema:
+                type: string
+                example: W/"272-aB6X/b4Yrfv7MojJwTAU6yw/frk"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 13:57:07 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Login Super Admin!
+                data:
+                  email: superadmin@email.com
+                  name: Super Admin
+                  role: superadmin
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiU3VwZXIgQWRtaW4iLCJlbWFpbCI6InN1cGVyYWRtaW5AZW1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkNVZiSDNVcWo2eVBWcW9TNExYM0VZZUozWVp3RVFIcHRmeVZ4eXZici4yQ2JTT045b1gwN2UiLCJyb2xlIjoic3VwZXJhZG1pbiIsInRva2VuIjpudWxsLCJjcmVhdGVkX2F0IjoiMjAyNC0wNS0yMlQxOTowMzo1NC43MjhaIiwidXBkYXRlZF9hdCI6bnVsbCwiZGVsZXRlZF9hdCI6bnVsbH0sImlhdCI6MTcxNjQ3MjYyNywiZXhwIjoxNzE2NDc0MDY3fQ.EIoAoXU9R9IvjeMflGHGvyQLbaPFrPkg7SqRgQVkhJw
+                  expiresIn: 1440
+  /api/member/register:
+    post:
+      tags:
+        - Auth
+      summary: Register - Member
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: required | string
+                  example: Member 1
+                email:
+                  type: string
+                  description: required | string
+                  example: member1@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: member1
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '600'
+            ETag:
+              schema:
+                type: string
+                example: W/"258-6hOzo/oQlzYTtyQSZz9NLluwnVM"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:23:47 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Register Member!
+                data:
+                  email: member1@email.com
+                  name: Member 1
+                  role: member
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJuYW1lIjoiTWVtYmVyIDEiLCJlbWFpbCI6Im1lbWJlcjFAZW1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkWTNlekZvaUtRYXYvN0NpNjRXVTZGdW1KZzFzZ0dzLjRDcTcwR1VMWnBPNHo0TWRtQ1NIUUMiLCJyb2xlIjoibWVtYmVyIiwidG9rZW4iOm51bGwsImNyZWF0ZWRfYXQiOiIyMDI0LTA1LTIzVDE0OjIzOjQ2Ljk5NloiLCJ1cGRhdGVkX2F0IjpudWxsLCJkZWxldGVkX2F0IjpudWxsfSwiaWF0IjoxNzE2NDc0MjI3LCJleHAiOjE3MTY0NzU2Njd9.ZeC9Xou7Yo0HaRi9u88zwyXjK8RnZaeb5SEZ1aQjQfA
+                  expiresIn: 1440
+  /api/member/login:
+    post:
+      tags:
+        - Auth
+      summary: Login - Member
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: required | string
+                  example: member1@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: member1
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '597'
+            ETag:
+              schema:
+                type: string
+                example: W/"255-UY+TPA+eNpOn6DzOWIxIUWq0+pE"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:25:38 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Login Member!
+                data:
+                  email: member1@email.com
+                  name: Member 1
+                  role: member
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJuYW1lIjoiTWVtYmVyIDEiLCJlbWFpbCI6Im1lbWJlcjFAZW1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkWTNlekZvaUtRYXYvN0NpNjRXVTZGdW1KZzFzZ0dzLjRDcTcwR1VMWnBPNHo0TWRtQ1NIUUMiLCJyb2xlIjoibWVtYmVyIiwidG9rZW4iOm51bGwsImNyZWF0ZWRfYXQiOiIyMDI0LTA1LTIzVDE0OjIzOjQ2Ljk5NloiLCJ1cGRhdGVkX2F0IjpudWxsLCJkZWxldGVkX2F0IjpudWxsfSwiaWF0IjoxNzE2NDc0MzM4LCJleHAiOjE3MTY0NzU3Nzh9.f6xtURyWp-DvF1xBbWlifztgHO7fcfoeBX9qWcqaJEw
+                  expiresIn: 1440
+  /api/admin/login:
+    post:
+      tags:
+        - Auth
+      summary: Login - Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: required | string
+                  example: admin1@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: admin1
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '619'
+            ETag:
+              schema:
+                type: string
+                example: W/"26b-RcrHM9tfZexVtDzRGCCEZEVoiw8"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 15:20:53 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Login Admin!
+                data:
+                  email: admin1@email.com
+                  name: ADMIN 1
+                  role: admin
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJuYW1lIjoiQURNSU4gMSIsImVtYWlsIjoiYWRtaW4xQGVtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJENWV0VZNnVFa2YubEpiUlEwS21OZC5pZ1Rmd1pGTm5YaDRjVHNMU3dacDVlNEdFY2c5MUVhIiwicm9sZSI6ImFkbWluIiwidG9rZW4iOm51bGwsImNyZWF0ZWRfYXQiOiIyMDI0LTA1LTIzVDE0OjI4OjIwLjYwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyNC0wNS0yM1QxNDozMTowOC40OTRaIiwiZGVsZXRlZF9hdCI6bnVsbH0sImlhdCI6MTcxNjQ3NzY1MywiZXhwIjoxNzE2NDc5MDkzfQ.R6QYX7LASYOhuO3k3ZeLLqV60D7Fly7ASzh1u8vIn74
+                  expiresIn: 1440
+  /api/current-user:
+    get:
+      tags:
+        - Auth
+      summary: Current User - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '134'
+            ETag:
+              schema:
+                type: string
+                example: W/"86-d8chMnu0GvPSUV1Oi+MdGjgGHvk"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 16:41:51 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Current User!
+                data:
+                  name: Super Admin
+                  email: superadmin@email.com
+                  role: superadmin
+  /api/user-admin:
+    get:
+      tags:
+        - User Admin
+      summary: Get All - User Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '324'
+            ETag:
+              schema:
+                type: string
+                example: W/"144-WyQxaaD/yZsMrdkK2qKTVy4rwoI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:35:20 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Users Admin!
+                data:
+                  users:
+                    - id: 4
+                      name: ADMIN 1
+                      email: admin1@email.com
+                      password: >-
+                        $2b$10$CVWEY6uEkf.lJbRQ0KmNd.igTfwZFNnXh4cTsLSwZp5e4GEcg91Ea
+                      role: admin
+                      token: null
+                      created_at: '2024-05-23T14:28:20.600Z'
+                      updated_at: '2024-05-23T14:31:08.494Z'
+                      deleted_at: null
+    post:
+      tags:
+        - User Admin
+      summary: Store - User Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: required | string
+                  example: ADMIN 1
+                email:
+                  type: string
+                  description: required | string
+                  example: admin1@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: admin1
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '54'
+            ETag:
+              schema:
+                type: string
+                example: W/"36-LlcCdqNIQYausPgnh7CEirmb4ck"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:28:20 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Create User Admin!
+  /api/user-admin/{id}:
+    get:
+      tags:
+        - User Admin
+      summary: Get By Id - User Admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '4'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '320'
+            ETag:
+              schema:
+                type: string
+                example: W/"140-WCyiBm6MZWdx2sKEYDMWOsD473s"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:35:35 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get User Admin!
+                data:
+                  user:
+                    id: 4
+                    name: ADMIN 1
+                    email: admin1@email.com
+                    password: >-
+                      $2b$10$CVWEY6uEkf.lJbRQ0KmNd.igTfwZFNnXh4cTsLSwZp5e4GEcg91Ea
+                    role: admin
+                    token: null
+                    created_at: '2024-05-23T14:28:20.600Z'
+                    updated_at: '2024-05-23T14:31:08.494Z'
+                    deleted_at: null
+    put:
+      tags:
+        - User Admin
+      summary: Update - User Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: required | string
+                  example: ADMIN 1
+                email:
+                  type: string
+                  description: required | string
+                  example: admin1@email.com
+                password:
+                  type: string
+                  description: required | string
+                  example: admin1
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: From User Id
+          example: '4'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '54'
+            ETag:
+              schema:
+                type: string
+                example: W/"36-XNcT59hFnT+pfe+87gdqvEtrIyI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 14:31:08 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Update User Admin!
+    delete:
+      tags:
+        - User Admin
+      summary: Delete - User Admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: From User Id
+          example: '4'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '54'
+            ETag:
+              schema:
+                type: string
+                example: W/"36-sSr+1hgvVSCyKYFNwxYU4ATo1WI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 23 May 2024 15:26:11 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Delete User Admin!

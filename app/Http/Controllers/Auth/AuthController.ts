@@ -202,7 +202,11 @@ export class AuthController {
     res.status(200).send({
       status:true,
       message:'Success Get Current User!',
-      data: req.user
+      data: {
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.role
+      }
     })
   }
 }
